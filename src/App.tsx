@@ -19,6 +19,7 @@ import AirGuard from './pages/AirGuard';
 import Personnel from './pages/Personnel';
 import AiPredictions from './pages/AiPredictions';
 import GlobalAlarm from './components/GlobalAlarm';
+import TutorialOverlay from './components/TutorialOverlay';
 import GasGuard from './pages/GasGuard';
 import StructuralGuard from './pages/StructuralGuard';
 
@@ -243,6 +244,7 @@ function App() {
   return (
     <BrowserRouter>
       <GlobalAlarm />
+      <TutorialOverlay />
       <Layout>
         <Routes>
           <Route path="/" element={<Landing />} />
