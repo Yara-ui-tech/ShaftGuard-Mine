@@ -115,16 +115,28 @@ const defaultWorkers: Record<DemoState, Worker[]> = {
     { id: 'W-001', name: 'Tendai Mutasa', role: 'Miner', location: 'Level 2 - South', helmetStatus: 'ONLINE', areaStatus: 'NORMAL', lastSeen: 'Just now' },
     { id: 'W-002', name: 'James Chuma', role: 'Supervisor', location: 'Level 1 - Main', helmetStatus: 'ONLINE', areaStatus: 'NORMAL', lastSeen: 'Just now' },
     { id: 'W-003', name: 'Sarah Moyo', role: 'Ventilation Tech', location: 'Level 3 - East', helmetStatus: 'ONLINE', areaStatus: 'NORMAL', lastSeen: '2 min ago' },
+    { id: 'W-004', name: 'Tafadzwa Ndlovu', role: 'Driller', location: 'Level 3 - East', helmetStatus: 'ONLINE', areaStatus: 'NORMAL', lastSeen: 'Just now' },
+    { id: 'W-005', name: 'Grace Chirwa', role: 'Geologist', location: 'Level 3 - East', helmetStatus: 'ONLINE', areaStatus: 'NORMAL', lastSeen: '5 min ago' },
+    { id: 'W-006', name: 'Peter Sibanda', role: 'Miner', location: 'Level 2 - South', helmetStatus: 'ONLINE', areaStatus: 'NORMAL', lastSeen: 'Just now' },
+    { id: 'W-007', name: 'David Banda', role: 'Electrician', location: 'Level 1 - North', helmetStatus: 'ONLINE', areaStatus: 'NORMAL', lastSeen: '10 min ago' },
   ],
   WARNING: [
     { id: 'W-001', name: 'Tendai Mutasa', role: 'Miner', location: 'Level 2 - South', helmetStatus: 'WARNING', areaStatus: 'HIGH RISK', lastSeen: 'Just now' },
     { id: 'W-002', name: 'James Chuma', role: 'Supervisor', location: 'Level 1 - Main', helmetStatus: 'ONLINE', areaStatus: 'CAUTION', lastSeen: 'Just now' },
-    { id: 'W-003', name: 'Sarah Moyo', role: 'Ventilation Tech', location: 'Level 3 - East', helmetStatus: 'ONLINE', areaStatus: 'NORMAL', lastSeen: '5 min ago' },
+    { id: 'W-003', name: 'Sarah Moyo', role: 'Ventilation Tech', location: 'Level 3 - East', helmetStatus: 'WARNING', areaStatus: 'HIGH RISK', lastSeen: '5 min ago' },
+    { id: 'W-004', name: 'Tafadzwa Ndlovu', role: 'Driller', location: 'Level 3 - East', helmetStatus: 'WARNING', areaStatus: 'HIGH RISK', lastSeen: 'Just now' },
+    { id: 'W-005', name: 'Grace Chirwa', role: 'Geologist', location: 'Level 3 - East', helmetStatus: 'WARNING', areaStatus: 'HIGH RISK', lastSeen: '5 min ago' },
+    { id: 'W-006', name: 'Peter Sibanda', role: 'Miner', location: 'Level 2 - South', helmetStatus: 'ONLINE', areaStatus: 'HIGH RISK', lastSeen: 'Just now' },
+    { id: 'W-007', name: 'David Banda', role: 'Electrician', location: 'Level 1 - North', helmetStatus: 'ONLINE', areaStatus: 'NORMAL', lastSeen: '10 min ago' },
   ],
   DANGER: [
-    { id: 'W-001', name: 'Tendai Mutasa', role: 'Miner', location: 'Level 2 - South', helmetStatus: 'WARNING', areaStatus: 'DANGER', lastSeen: '1 min ago' },
+    { id: 'W-001', name: 'Tendai Mutasa', role: 'Miner', location: 'Level 2 - South', helmetStatus: 'WARNING', areaStatus: 'HIGH RISK', lastSeen: '1 min ago' },
     { id: 'W-002', name: 'James Chuma', role: 'Supervisor', location: 'Level 1 - Main', helmetStatus: 'ONLINE', areaStatus: 'HIGH RISK', lastSeen: 'Just now' },
     { id: 'W-003', name: 'Sarah Moyo', role: 'Ventilation Tech', location: 'Level 3 - East', helmetStatus: 'OFFLINE', areaStatus: 'DANGER', lastSeen: '15 min ago' },
+    { id: 'W-004', name: 'Tafadzwa Ndlovu', role: 'Driller', location: 'Level 3 - East', helmetStatus: 'WARNING', areaStatus: 'DANGER', lastSeen: 'Just now' },
+    { id: 'W-005', name: 'Grace Chirwa', role: 'Geologist', location: 'Level 3 - East', helmetStatus: 'WARNING', areaStatus: 'DANGER', lastSeen: '2 min ago' },
+    { id: 'W-006', name: 'Peter Sibanda', role: 'Miner', location: 'Level 2 - South', helmetStatus: 'ONLINE', areaStatus: 'HIGH RISK', lastSeen: 'Just now' },
+    { id: 'W-007', name: 'David Banda', role: 'Electrician', location: 'Level 1 - North', helmetStatus: 'ONLINE', areaStatus: 'NORMAL', lastSeen: '10 min ago' },
   ]
 };
 

@@ -22,7 +22,24 @@ export default function Personnel() {
       <DemoControls />
 
       <div className="glass-panel p-6 mt-8">
-        <h2 className="text-xl font-bold text-white mb-6">WORKER STATUS</h2>
+        {demoState === 'DANGER' && (
+          <div className="mb-8 p-4 bg-red-900/40 border-2 border-red-500 rounded-xl flex flex-col md:flex-row items-center justify-between shadow-[0_0_30px_rgba(220,38,38,0.3)] animate-in fade-in slide-in-from-top-4 duration-500">
+            <div className="flex items-center text-red-400 mb-4 md:mb-0">
+               <AlertCircle className="w-12 h-12 mr-5 animate-pulse" />
+               <div>
+                 <h2 className="text-xl font-black text-white uppercase tracking-wider">Critical Zone Identified: Level 3 - East</h2>
+                 <p className="text-sm font-medium">AI has pinpointed Level 3 - East as the epicenter of the hazard. 3 workers detected in this sector.</p>
+               </div>
+            </div>
+            <button className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-black tracking-widest text-sm rounded-lg animate-pulse w-full md:w-auto shadow-lg shadow-red-500/20">
+               BROADCAST EVACUATION OVERRIDE
+            </button>
+          </div>
+        )}
+        
+        <h2 className="text-xl font-bold text-white mb-6 flex items-center">
+          <Activity className="w-5 h-5 mr-2 text-primary" /> WORKER STATUS
+        </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {workers.map(worker => (
