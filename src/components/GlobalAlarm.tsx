@@ -20,27 +20,51 @@ export default function GlobalAlarm() {
         audioCtxRef.current.resume();
       }
 
-      const playBeep = () => {
+      const playSiren = () => {
         if (!audioCtxRef.current) return;
         
-        const osc = audioCtxRef.current.createOscillator();
-        const gainNode = audioCtxRef.current.createGain();
+        const ctx = audioCtxRef.current;
+        const gainNode = ctx.createGain();
+        gainNode.connect(ctx.destination);
         
-        osc.type = 'square';
-        osc.frequency.setValueAtTime(800, audioCtxRef.current.currentTime);
-        osc.frequency.setValueAtTime(1200, audioCtxRef.current.currentTime + 0.1);
+        // Master volume for the burst
+        gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+
+        // Oscillator 1 - High pitch piercing sawtooth
+        const osc1 = ctx.createOscillator();
+        osc1.type = 'sawtooth';
+        osc1.frequency.setValueAtTime(900, ctx.currentTime);
+        osc1.frequency.linearRampToValueAtTime(1400, ctx.currentTime + 0.2);
+        osc1.frequency.linearRampToValueAtTime(900, ctx.currentTime + 0.4);
+        osc1.connect(gainNode);
+
+        // Oscillator 2 - Dissonant square wave to make it grating
+        const osc2 = ctx.createOscillator();
+        osc2.type = 'square';
+        osc2.frequency.setValueAtTime(945, ctx.currentTime); // Dissonant interval
+        osc2.frequency.linearRampToValueAtTime(1470, ctx.currentTime + 0.2);
+        osc2.frequency.linearRampToValueAtTime(945, ctx.currentTime + 0.4);
+        osc2.connect(gainNode);
         
-        gainNode.gain.setValueAtTime(0.1, audioCtxRef.current.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtxRef.current.currentTime + 0.3);
+        // Oscillator 3 - Low rumble for urgency
+        const osc3 = ctx.createOscillator();
+        osc3.type = 'sawtooth';
+        osc3.frequency.setValueAtTime(150, ctx.currentTime);
+        osc3.frequency.linearRampToValueAtTime(100, ctx.currentTime + 0.4);
+        osc3.connect(gainNode);
+
+        osc1.start(ctx.currentTime);
+        osc2.start(ctx.currentTime);
+        osc3.start(ctx.currentTime);
         
-        osc.connect(gainNode);
-        gainNode.connect(audioCtxRef.current.destination);
-        
-        osc.start();
-        osc.stop(audioCtxRef.current.currentTime + 0.3);
+        osc1.stop(ctx.currentTime + 0.4);
+        osc2.stop(ctx.currentTime + 0.4);
+        osc3.stop(ctx.currentTime + 0.4);
       };
 
-      intervalRef.current = window.setInterval(playBeep, 500);
+      // Very fast pulsing siren
+      intervalRef.current = window.setInterval(playSiren, 450);
 
       return () => {
         if (intervalRef.current !== null) {
