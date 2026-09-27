@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { AlertTriangle, VolumeX, Volume2, Cpu, ShieldAlert, Users, Wind } from 'lucide-react';
+import { AlertTriangle, VolumeX, Volume2, Cpu, ShieldAlert, Users, Wind, Info } from 'lucide-react';
 
 export default function GlobalAlarm() {
   const { demoState, sensorData, airData, setDemoState } = useAppContext();
@@ -8,6 +8,7 @@ export default function GlobalAlarm() {
   const [countdown, setCountdown] = useState(30);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const intervalRef = useRef<number | null>(null);
+  const warningIntervalRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (demoState === 'DANGER') {
@@ -20,80 +21,129 @@ export default function GlobalAlarm() {
   }, [demoState]);
 
   useEffect(() => {
-    if (demoState === 'DANGER' && !isMuted) {
-      if (!audioCtxRef.current) {
-        audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
-      }
+    // Clear any existing intervals
+    if (intervalRef.current !== null) clearInterval(intervalRef.current);
+    if (warningIntervalRef.current !== null) clearInterval(warningIntervalRef.current);
 
-      if (audioCtxRef.current.state === 'suspended') {
-        audioCtxRef.current.resume();
-      }
+    if (demoState === 'NORMAL' || isMuted) return;
 
-      const playSiren = () => {
-        if (!audioCtxRef.current) return;
-        
-        const ctx = audioCtxRef.current;
-        const gainNode = ctx.createGain();
-        gainNode.connect(ctx.destination);
-        
-        gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
-
-        const osc1 = ctx.createOscillator();
-        osc1.type = 'sawtooth';
-        osc1.frequency.setValueAtTime(900, ctx.currentTime);
-        osc1.frequency.linearRampToValueAtTime(1400, ctx.currentTime + 0.2);
-        osc1.frequency.linearRampToValueAtTime(900, ctx.currentTime + 0.4);
-        osc1.connect(gainNode);
-
-        const osc2 = ctx.createOscillator();
-        osc2.type = 'square';
-        osc2.frequency.setValueAtTime(945, ctx.currentTime);
-        osc2.frequency.linearRampToValueAtTime(1470, ctx.currentTime + 0.2);
-        osc2.frequency.linearRampToValueAtTime(945, ctx.currentTime + 0.4);
-        osc2.connect(gainNode);
-        
-        const osc3 = ctx.createOscillator();
-        osc3.type = 'sawtooth';
-        osc3.frequency.setValueAtTime(150, ctx.currentTime);
-        osc3.frequency.linearRampToValueAtTime(100, ctx.currentTime + 0.4);
-        osc3.connect(gainNode);
-
-        osc1.start(ctx.currentTime);
-        osc2.start(ctx.currentTime);
-        osc3.start(ctx.currentTime);
-        
-        osc1.stop(ctx.currentTime + 0.4);
-        osc2.stop(ctx.currentTime + 0.4);
-        osc3.stop(ctx.currentTime + 0.4);
-      };
-
-      intervalRef.current = window.setInterval(playSiren, 450);
-
-      return () => {
-        if (intervalRef.current !== null) {
-          clearInterval(intervalRef.current);
-        }
-      };
-    } else {
-      if (intervalRef.current !== null) {
-        clearInterval(intervalRef.current);
-      }
+    if (!audioCtxRef.current) {
+      audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
     }
+    if (audioCtxRef.current.state === 'suspended') {
+      audioCtxRef.current.resume();
+    }
+
+    const ctx = audioCtxRef.current;
+
+    const playSiren = () => {
+      const gainNode = ctx.createGain();
+      gainNode.connect(ctx.destination);
+      gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
+
+      const osc1 = ctx.createOscillator();
+      osc1.type = 'sawtooth';
+      osc1.frequency.setValueAtTime(900, ctx.currentTime);
+      osc1.frequency.linearRampToValueAtTime(1400, ctx.currentTime + 0.2);
+      osc1.frequency.linearRampToValueAtTime(900, ctx.currentTime + 0.4);
+      osc1.connect(gainNode);
+
+      const osc2 = ctx.createOscillator();
+      osc2.type = 'square';
+      osc2.frequency.setValueAtTime(945, ctx.currentTime);
+      osc2.frequency.linearRampToValueAtTime(1470, ctx.currentTime + 0.2);
+      osc2.frequency.linearRampToValueAtTime(945, ctx.currentTime + 0.4);
+      osc2.connect(gainNode);
+      
+      const osc3 = ctx.createOscillator();
+      osc3.type = 'sawtooth';
+      osc3.frequency.setValueAtTime(150, ctx.currentTime);
+      osc3.frequency.linearRampToValueAtTime(100, ctx.currentTime + 0.4);
+      osc3.connect(gainNode);
+
+      osc1.start(ctx.currentTime);
+      osc2.start(ctx.currentTime);
+      osc3.start(ctx.currentTime);
+      
+      osc1.stop(ctx.currentTime + 0.4);
+      osc2.stop(ctx.currentTime + 0.4);
+      osc3.stop(ctx.currentTime + 0.4);
+    };
+
+    const playWarningBeep = () => {
+      const gainNode = ctx.createGain();
+      gainNode.connect(ctx.destination);
+      gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.2);
+
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(800, ctx.currentTime);
+      osc.connect(gainNode);
+      
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.2);
+    };
+
+    if (demoState === 'DANGER') {
+      intervalRef.current = window.setInterval(playSiren, 450);
+    } else if (demoState === 'WARNING') {
+      // Play beep every 3 seconds for WARNING
+      warningIntervalRef.current = window.setInterval(playWarningBeep, 3000);
+      playWarningBeep(); // Play immediately once
+    }
+
+    return () => {
+      if (intervalRef.current !== null) clearInterval(intervalRef.current);
+      if (warningIntervalRef.current !== null) clearInterval(warningIntervalRef.current);
+    };
   }, [demoState, isMuted]);
 
-  if (demoState !== 'DANGER') return null;
+  if (demoState === 'NORMAL') return null;
 
+  if (demoState === 'WARNING') {
+    return (
+      <div className="fixed top-24 right-8 z-[9000] w-96 animate-in slide-in-from-right-8 duration-300">
+        <div className="bg-amber-950/90 border border-amber-500 rounded-xl p-5 shadow-[0_0_30px_rgba(245,158,11,0.3)] backdrop-blur-md">
+          <div className="flex items-start mb-3">
+            <AlertTriangle className="w-6 h-6 text-amber-500 mr-3 mt-0.5 animate-pulse" />
+            <div className="flex-1">
+              <h3 className="text-white font-bold text-lg leading-tight">Elevated Hazard Level</h3>
+              <p className="text-amber-400/80 text-sm font-medium">Please review parameters.</p>
+            </div>
+            <button onClick={() => setIsMuted(!isMuted)} className="text-slate-400 hover:text-white transition-colors">
+              {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+            </button>
+          </div>
+          
+          <div className="bg-black/40 rounded-lg p-3 mb-4">
+            <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center mb-2">
+              <Cpu className="w-3 h-3 mr-1 text-primary" /> AI Recommended Action
+            </h4>
+            <p className="text-sm text-slate-200">
+              Increase ventilation in Level 2. Monitor structural convergence. Restrict personnel entry to affected zones.
+            </p>
+          </div>
+          
+          <button 
+            onClick={() => setDemoState('NORMAL')}
+            className="w-full py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg transition-colors text-sm"
+          >
+            ACKNOWLEDGE & RESOLVE
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // DANGER Modal...
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-auto">
-      {/* Background overlay */}
       <div className="absolute inset-0 bg-black/90 backdrop-blur-lg"></div>
       <div className="absolute inset-0 bg-red-900/20 animate-[pulse_1s_ease-in-out_infinite] border-[16px] border-red-600/60 pointer-events-none"></div>
       
-      {/* Modal Content */}
       <div className="relative bg-surface border-2 border-red-500 rounded-3xl p-8 max-w-4xl w-full mx-4 shadow-[0_0_150px_rgba(220,38,38,0.5)]">
-        
-        {/* Header */}
         <div className="flex flex-col items-center justify-center mb-8">
            <div className="bg-red-500/20 p-4 rounded-full mb-4 animate-bounce">
              <AlertTriangle className="w-20 h-20 text-red-500 drop-shadow-[0_0_15px_rgba(220,38,38,1)]" />
@@ -102,7 +152,6 @@ export default function GlobalAlarm() {
            <p className="text-center text-red-400 font-black tracking-widest uppercase text-xl">Immediate Evacuation Recommended</p>
         </div>
         
-        {/* Critical Parameters */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
            <div className="bg-red-950/60 border border-red-500/50 p-4 rounded-xl text-center shadow-inner">
               <div className="text-xs text-red-300 font-bold mb-1 uppercase">Water Level</div>
@@ -122,7 +171,6 @@ export default function GlobalAlarm() {
            </div>
         </div>
 
-        {/* AI Action Panel */}
         <div className="bg-slate-900 border-2 border-amber-500/50 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between mb-8 shadow-xl relative overflow-hidden">
             <div className="absolute top-0 left-0 bottom-0 w-2 bg-amber-500 animate-pulse"></div>
             <div className="flex items-center text-amber-500 mb-4 md:mb-0 ml-4">
@@ -142,7 +190,6 @@ export default function GlobalAlarm() {
             </div>
         </div>
 
-        {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row justify-center gap-4">
            <button 
              onClick={() => setIsMuted(!isMuted)} 
@@ -155,13 +202,9 @@ export default function GlobalAlarm() {
              onClick={() => setDemoState('WARNING')}
              className="px-8 py-4 bg-surface border-2 border-slate-600 hover:border-slate-400 text-white font-bold rounded-xl text-lg transition-colors flex-1 shadow-lg"
            >
-              ACKNOWLEDGE & TAKE MANUAL CONTROL
+              ACKNOWLEDGE & DOWNGRADE TO WARNING
            </button>
         </div>
-        
-        <p className="text-center mt-6 text-xs text-slate-500 font-bold tracking-widest uppercase opacity-60">
-          SHAFTGUARD PREDICTIVE ANALYTICS ENGINE
-        </p>
       </div>
     </div>
   );

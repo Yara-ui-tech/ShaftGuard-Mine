@@ -16,6 +16,8 @@ interface AppContextType {
   isMqttLive: boolean;
   setMqttLive: (mode: boolean) => void;
   mqttStatus: string;
+  isConfigured: boolean;
+  setConfigured: (mode: boolean) => void;
 }
 
 const defaultSensorData: Record<DemoState, SensorData> = {
@@ -184,6 +186,7 @@ import { useEffect } from 'react';
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [demoState, setDemoState] = useState<DemoState>('NORMAL');
   const [isPitchMode, setPitchMode] = useState<boolean>(false);
+  const [isConfigured, setConfigured] = useState<boolean>(false);
   
   // MQTT Integration
   const [isMqttLive, setMqttLive] = useState<boolean>(false);
@@ -245,7 +248,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setPitchMode,
     isMqttLive,
     setMqttLive,
-    mqttStatus
+    mqttStatus,
+    isConfigured,
+    setConfigured
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

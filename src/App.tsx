@@ -20,6 +20,7 @@ import Personnel from './pages/Personnel';
 import AiPredictions from './pages/AiPredictions';
 import GlobalAlarm from './components/GlobalAlarm';
 import TutorialOverlay from './components/TutorialOverlay';
+import SetupWizard from './components/SetupWizard';
 import GasGuard from './pages/GasGuard';
 import StructuralGuard from './pages/StructuralGuard';
 
@@ -240,9 +241,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-function App() {
+function AppContent() {
+  const { isConfigured } = useAppContext();
+
+  if (!isConfigured) {
+    return <SetupWizard />;
+  }
+
   return (
-    <BrowserRouter>
+    <>
       <GlobalAlarm />
       <TutorialOverlay />
       <Layout>
@@ -265,6 +272,14 @@ function App() {
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </Layout>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }
