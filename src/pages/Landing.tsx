@@ -1,8 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShieldAlert, Activity, Droplets, Wind, Cpu, ArrowRight, ActivitySquare } from 'lucide-react';
+import heroImage from '../assets/hero.png';
 
 export default function Landing() {
+  const [loaded, setLoaded] = React.useState(false);
+  
+  React.useEffect(() => {
+    setLoaded(true);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-slate-200">
       {/* Header */}
@@ -42,13 +49,22 @@ export default function Landing() {
             An affordable modular mining monitoring platform designed to provide early warnings, environmental intelligence and operational visibility for Zimbabwean mining communities.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
             <Link to="/dashboard" className="w-full sm:w-auto px-8 py-4 bg-primary hover:bg-blue-600 text-white rounded-xl font-bold transition-all shadow-[0_0_30px_rgba(59,130,246,0.4)] flex items-center justify-center">
               Explore Dashboard <ArrowRight className="ml-2 w-5 h-5" />
             </Link>
             <Link to="/architecture" className="w-full sm:w-auto px-8 py-4 bg-surface hover:bg-border text-white border border-border rounded-xl font-bold transition-all flex items-center justify-center">
               View Architecture
             </Link>
+          </div>
+          
+          <div className={`relative transition-all duration-1000 delay-300 ease-out transform ${loaded ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-16 scale-95'}`}>
+            <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full"></div>
+            <img 
+              src={heroImage} 
+              alt="SHAFTGUARD AI Dashboard Preview" 
+              className="relative w-full max-w-5xl mx-auto rounded-2xl shadow-2xl border-4 border-surface" 
+            />
           </div>
         </div>
       </section>
