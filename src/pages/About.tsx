@@ -1,5 +1,5 @@
-import React from 'react';
-import { ShieldCheck, Info, Tag, MapPin, Settings as SettingsIcon } from 'lucide-react';
+
+import { Info, Tag, MapPin, Settings as SettingsIcon } from 'lucide-react';
 
 export default function About() {
   return (

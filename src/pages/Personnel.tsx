@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useAppContext } from '../context/AppContext';
 import DemoControls from '../components/DemoControls';
 import { HardHat, MapPin, User, Activity, AlertCircle } from 'lucide-react';

@@ -1,7 +1,7 @@
-import React from 'react';
+
 import { useAppContext } from '../context/AppContext';
 import DemoControls from '../components/DemoControls';
-import { BrainCircuit, Search, ShieldCheck, AlertTriangle, AlertCircle, ArrowRight } from 'lucide-react';
+import { BrainCircuit, Search, ArrowRight } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
 export default function AiPredictions() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldAlert, Activity, Droplets, Wind, Cpu, Settings as SettingsIcon, Play, ArrowRight, ActivitySquare } from 'lucide-react';
+import { ShieldAlert, Activity, Droplets, Wind, Cpu, ArrowRight, ActivitySquare } from 'lucide-react';
 
 export default function Landing() {
   return (

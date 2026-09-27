@@ -1,6 +1,6 @@
-import React from 'react';
+
 import { useAppContext } from '../context/AppContext';
-import { ShieldAlert, AlertTriangle, AlertCircle, Info, Clock, PlayCircle } from 'lucide-react';
+import { ShieldAlert, AlertTriangle, AlertCircle, Info, Clock } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 import DemoControls from '../components/DemoControls';
 

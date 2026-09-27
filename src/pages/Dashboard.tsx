@@ -1,8 +1,8 @@
-import React from 'react';
+
 import { useAppContext } from '../context/AppContext';
 import RiskCard from '../components/RiskCard';
 import SensorCard from '../components/SensorCard';
-import { Activity, Droplets, ShieldAlert, Wifi, Battery, Zap } from 'lucide-react';
+import { Activity, Droplets, ShieldAlert, Wifi, Wind } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Dashboard() {

@@ -1,9 +1,8 @@
-import React from 'react';
+
 import { useAppContext } from '../context/AppContext';
 import { Save, Settings as SettingsIcon, AlertTriangle, MonitorSmartphone, Bell, Sliders } from 'lucide-react';
 
 export default function Settings() {
-  const { demoState } = useAppContext();
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">

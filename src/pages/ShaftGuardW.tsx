@@ -1,8 +1,8 @@
-import React from 'react';
+
 import { useAppContext } from '../context/AppContext';
 import SensorCard from '../components/SensorCard';
 import DemoControls from '../components/DemoControls';
-import { Droplets, Activity, Thermometer, FlaskConical, AlertTriangle, ArrowRight, ShieldCheck, Beaker } from 'lucide-react';
+import { Droplets, Activity, Thermometer, FlaskConical, AlertTriangle, ArrowRight, Zap } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
 export default function ShaftGuardW() {

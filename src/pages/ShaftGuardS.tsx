@@ -1,9 +1,9 @@
-import React from 'react';
+
 import { useAppContext } from '../context/AppContext';
 import MineShaftVisualization from '../components/MineShaftVisualization';
 import SensorCard from '../components/SensorCard';
 import DemoControls from '../components/DemoControls';
-import { Droplets, Activity, Thermometer, Wind, Zap, Sun, Anchor, ShieldCheck, AlertTriangle, AlertCircle } from 'lucide-react';
+import { Droplets, Activity, Thermometer, Wind, Battery, Sun, Anchor, ShieldCheck, AlertTriangle, AlertCircle } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 // Mock chart data generator

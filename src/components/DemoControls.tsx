@@ -1,6 +1,6 @@
-import React from 'react';
+
 import { useAppContext } from '../context/AppContext';
-import { DemoState } from '../types';
+import type { DemoState } from '../types';
 
 export default function DemoControls() {
   const { demoState, setDemoState } = useAppContext();

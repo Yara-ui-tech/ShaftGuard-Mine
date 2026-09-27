@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Layers, Cpu, BrainCircuit, Radio, LayoutDashboard, Users, ArrowDown, Battery, Sun, Zap, Info } from 'lucide-react';
 
 export default function Architecture() {

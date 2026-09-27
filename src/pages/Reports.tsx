@@ -1,9 +1,8 @@
-import React from 'react';
+
 import { FileText, Download, TrendingUp, ShieldAlert, Activity, Info } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
 export default function Reports() {
-  const { demoState } = useAppContext();
   
   return (
     <div className="space-y-6 max-w-5xl mx-auto">

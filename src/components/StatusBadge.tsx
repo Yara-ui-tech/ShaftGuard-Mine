@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { ShieldCheck, AlertTriangle, AlertCircle, Info, Zap } from 'lucide-react';
 
 interface StatusBadgeProps {

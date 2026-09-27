@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { DemoState, SensorData, WaterQualityData, Alert, AirQualityData, Worker, AiPrediction } from '../types';
+import { createContext, useContext, useState } from 'react';
+import type { ReactNode } from 'react';
+import type { DemoState, SensorData, WaterQualityData, Alert, AirQualityData, Worker, AiPrediction } from '../types';
 
 interface AppContextType {
   demoState: DemoState;

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Activity, Droplets, Wind, Cpu, Settings as SettingsIcon, Hexagon, ArrowRight, ArrowDown } from 'lucide-react';
+
+import { Activity, Droplets, Wind, Cpu, Settings as SettingsIcon, ArrowDown } from 'lucide-react';
 
 export default function FutureModules() {
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { useAppContext } from '../context/AppContext';
 import SensorCard from '../components/SensorCard';
 import DemoControls from '../components/DemoControls';
