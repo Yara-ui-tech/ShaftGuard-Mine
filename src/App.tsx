@@ -19,6 +19,8 @@ import AirGuard from './pages/AirGuard';
 import Personnel from './pages/Personnel';
 import AiPredictions from './pages/AiPredictions';
 import GlobalAlarm from './components/GlobalAlarm';
+import GasGuard from './pages/GasGuard';
+import StructuralGuard from './pages/StructuralGuard';
 
 const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: boolean) => void }) => {
   const location = useLocation();
@@ -27,8 +29,10 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: bool
   const navItems = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'Shaft Safety', path: '/shaft', icon: Activity },
+    { name: 'Structural', path: '/structural', icon: Activity },
     { name: 'Water Monitoring', path: '/water', icon: Droplets },
     { name: 'Air Guard', path: '/air', icon: Wind },
+    { name: 'Gas Detection', path: '/gas', icon: Wind },
     { name: 'Personnel', path: '/personnel', icon: Activity },
     { name: 'AI Predictions', path: '/ai-predictions', icon: Activity },
     { name: 'Environmental', path: '/modules', icon: Wind },
@@ -107,6 +111,30 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: bool
               >
                 DANGER
               </button>
+            </div>
+            
+            <div className="mt-4 pt-3 border-t border-blue-500/20">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] text-secondary font-bold">LIVE MQTT DATA</span>
+                <button 
+                  onClick={() => {
+                    // @ts-ignore
+                    const ctx = useAppContext();
+                    ctx.setMqttLive(!ctx.isMqttLive);
+                  }}
+                  className={`w-10 h-5 rounded-full relative transition-colors ${
+                    // @ts-ignore
+                    useAppContext().isMqttLive ? 'bg-primary' : 'bg-surface border border-border'
+                  }`}
+                >
+                  <div className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${
+                    // @ts-ignore
+                    useAppContext().isMqttLive ? 'translate-x-5' : 'translate-x-0'
+                  }`} />
+                </button>
+              </div>
+              {/* @ts-ignore */}
+              <div className="text-[9px] mt-1 text-slate-500 text-right">Status: {useAppContext().mqttStatus}</div>
             </div>
           </div>
           
@@ -220,8 +248,10 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/shaft" element={<ShaftGuardS />} />
+          <Route path="/structural" element={<StructuralGuard />} />
           <Route path="/water" element={<ShaftGuardW />} />
           <Route path="/air" element={<AirGuard />} />
+          <Route path="/gas" element={<GasGuard />} />
           <Route path="/personnel" element={<Personnel />} />
           <Route path="/ai-predictions" element={<AiPredictions />} />
           <Route path="/modules" element={<FutureModules />} />

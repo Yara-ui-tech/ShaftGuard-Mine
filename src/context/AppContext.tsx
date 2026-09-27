@@ -13,6 +13,9 @@ interface AppContextType {
   alerts: Alert[];
   isPitchMode: boolean;
   setPitchMode: (mode: boolean) => void;
+  isMqttLive: boolean;
+  setMqttLive: (mode: boolean) => void;
+  mqttStatus: string;
 }
 
 const defaultSensorData: Record<DemoState, SensorData> = {
@@ -175,21 +178,74 @@ const defaultAlerts: Record<DemoState, Alert[]> = {
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
+import mqtt from 'mqtt';
+import { useEffect } from 'react';
+
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [demoState, setDemoState] = useState<DemoState>('NORMAL');
   const [isPitchMode, setPitchMode] = useState<boolean>(false);
+  
+  // MQTT Integration
+  const [isMqttLive, setMqttLive] = useState<boolean>(false);
+  const [mqttStatus, setMqttStatus] = useState<'OFFLINE' | 'CONNECTING' | 'CONNECTED'>('OFFLINE');
+  
+  // Dynamic state that can be updated via MQTT
+  const [liveSensorData, setLiveSensorData] = useState<SensorData>(defaultSensorData['NORMAL']);
+
+  useEffect(() => {
+    if (isMqttLive) {
+      setMqttStatus('CONNECTING');
+      const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt');
+
+      client.on('connect', () => {
+        setMqttStatus('CONNECTED');
+        client.subscribe('shaftguard/sensor/#');
+      });
+
+      client.on('message', (topic, message) => {
+        try {
+          const payload = JSON.parse(message.toString());
+          if (topic === 'shaftguard/sensor/telemetry') {
+             // Expecting payload: { waterLevel, tilt, temperature, etc... }
+             setLiveSensorData(prev => ({ ...prev, ...payload }));
+          }
+        } catch (e) {
+          console.error("MQTT Message Parse Error", e);
+        }
+      });
+
+      return () => {
+        client.end();
+        setMqttStatus('OFFLINE');
+      };
+    } else {
+      setMqttStatus('OFFLINE');
+      // Reset live sensor data to demo state when toggled off
+      setLiveSensorData(defaultSensorData[demoState]);
+    }
+  }, [isMqttLive]);
+  
+  // Sync live data with demo state changes if not in live mode
+  useEffect(() => {
+    if (!isMqttLive) {
+      setLiveSensorData(defaultSensorData[demoState]);
+    }
+  }, [demoState, isMqttLive]);
 
   const value = {
     demoState,
     setDemoState,
-    sensorData: defaultSensorData[demoState],
+    sensorData: liveSensorData,
     waterData: defaultWaterData[demoState],
     airData: defaultAirData[demoState],
     workers: defaultWorkers[demoState],
     predictions: defaultPredictions[demoState],
     alerts: defaultAlerts[demoState],
     isPitchMode,
-    setPitchMode
+    setPitchMode,
+    isMqttLive,
+    setMqttLive,
+    mqttStatus
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
