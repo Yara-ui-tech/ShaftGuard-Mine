@@ -18,6 +18,7 @@ import Settings from './pages/Settings';
 import AirGuard from './pages/AirGuard';
 import Personnel from './pages/Personnel';
 import AiPredictions from './pages/AiPredictions';
+import GlobalAlarm from './components/GlobalAlarm';
 
 const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: boolean) => void }) => {
   const location = useLocation();
@@ -194,6 +195,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 function App() {
   return (
     <BrowserRouter>
+      <GlobalAlarm />
       <Layout>
         <Routes>
           <Route path="/" element={<Landing />} />

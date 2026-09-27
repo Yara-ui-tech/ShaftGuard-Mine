@@ -4,6 +4,7 @@ import RiskCard from '../components/RiskCard';
 import SensorCard from '../components/SensorCard';
 import { Activity, Droplets, ShieldAlert, Wifi, Wind } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import LiveMap from '../components/LiveMap';
 
 export default function Dashboard() {
   const { sensorData, waterData, airData, workers, alerts } = useAppContext();
@@ -66,9 +67,13 @@ export default function Dashboard() {
         />
       </div>
 
+      {/* Live Map */}
+      <div className="mb-6">
+        <LiveMap />
+      </div>
+
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
         {/* Module Statuses */}
         <div className="lg:col-span-2 space-y-6">
           <div className="glass-panel p-6">
