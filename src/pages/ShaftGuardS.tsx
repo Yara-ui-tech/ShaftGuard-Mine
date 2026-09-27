@@ -159,6 +159,10 @@ export default function ShaftGuardS() {
         <div className="col-span-2"><SensorCard title="Ground Movement" value="NORMAL" icon={Activity} status="NORMAL" /></div>
         <div className="col-span-2"><SensorCard title="Battery" value={sensorData.battery} unit="%" icon={Battery} /></div>
         <div className="col-span-2"><SensorCard title="Solar Input" value="ACTIVE" icon={Sun} status="ACTIVE" /></div>
+        <div className="col-span-2"><SensorCard title="Acoustic Emissions (Developments)" value={demoState === 'DANGER' ? 'HIGH' : 'LOW'} icon={Activity} status={demoState === 'DANGER' ? 'ABNORMAL' : 'NORMAL'} /></div>
+        <div className="col-span-2"><SensorCard title="Ground Pressure (Developments)" value={demoState === 'WARNING' ? '12.5' : '4.2'} unit="MPa" icon={Activity} status={demoState === 'WARNING' ? 'INVESTIGATE' : 'NORMAL'} /></div>
+        <div className="col-span-2"><SensorCard title="Laser Profiler (Developments)" value="OK" icon={Activity} status="NORMAL" /></div>
+        <div className="col-span-2"><SensorCard title="Fiber Optic Strain (Developments)" value={demoState === 'DANGER' ? '3.5' : '0.2'} unit="με" icon={Activity} status={demoState === 'DANGER' ? 'INVESTIGATE' : 'NORMAL'} /></div>
       </div>
 
       {/* Charts */}

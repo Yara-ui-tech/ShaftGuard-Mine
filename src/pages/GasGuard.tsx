@@ -9,7 +9,16 @@ export default function GasGuard() {
     { name: 'Methane (CH4)', value: demoState === 'DANGER' ? '2.5' : demoState === 'WARNING' ? '1.2' : '0.1', unit: '% LEL', status: demoState === 'DANGER' ? 'ABNORMAL' : demoState === 'WARNING' ? 'INVESTIGATE' : 'NORMAL' },
     { name: 'Carbon Monoxide (CO)', value: demoState === 'DANGER' ? '35' : '5', unit: 'ppm', status: demoState === 'DANGER' ? 'INVESTIGATE' : 'NORMAL' },
     { name: 'Hydrogen Sulfide (H2S)', value: '0.0', unit: 'ppm', status: 'NORMAL' },
-    { name: 'Oxygen (O2)', value: demoState === 'DANGER' ? '19.0' : '20.9', unit: '%', status: demoState === 'DANGER' ? 'INVESTIGATE' : 'NORMAL' }
+    { name: 'Oxygen (O2)', value: demoState === 'DANGER' ? '19.0' : '20.9', unit: '%', status: demoState === 'DANGER' ? 'INVESTIGATE' : 'NORMAL' },
+    { name: 'Carbon Dioxide (CO2) (Developments)', value: demoState === 'DANGER' ? '0.8' : '0.04', unit: '%', status: demoState === 'DANGER' ? 'INVESTIGATE' : 'NORMAL' },
+    { name: 'Nitrogen Dioxide (NO2) (Developments)', value: '0.1', unit: 'ppm', status: 'NORMAL' },
+    { name: 'Sulfur Dioxide (SO2) (Developments)', value: '0.0', unit: 'ppm', status: 'NORMAL' },
+    { name: 'Ammonia (NH3) (Developments)', value: '0.0', unit: 'ppm', status: 'NORMAL' },
+    { name: 'Hydrogen (H2) (Developments)', value: '0.0', unit: '% LEL', status: 'NORMAL' },
+    { name: 'Volatile Organic Compounds (VOCs) (Developments)', value: demoState === 'DANGER' ? '12.5' : '1.2', unit: 'ppm', status: demoState === 'DANGER' ? 'INVESTIGATE' : 'NORMAL' },
+    { name: 'Radon Gas (Developments)', value: '45', unit: 'Bq/m3', status: 'NORMAL' },
+    { name: 'Diesel Particulate (DPM) (Developments)', value: demoState === 'WARNING' ? '0.2' : '0.05', unit: 'mg/m3', status: demoState === 'WARNING' ? 'INVESTIGATE' : 'NORMAL' },
+    { name: 'Respirable Dust (Developments)', value: demoState === 'DANGER' ? '4.5' : '1.2', unit: 'mg/m3', status: demoState === 'DANGER' ? 'ABNORMAL' : 'NORMAL' }
   ];
 
   return (

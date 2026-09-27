@@ -30,6 +30,12 @@ export default function ShaftGuardW() {
         <SensorCard title="Turbidity" value={waterData.turbidity} icon={Droplets} status={waterData.turbidity === 'HIGH' ? 'ABNORMAL' : waterData.turbidity === 'MEDIUM' ? 'INVESTIGATE' : 'NORMAL'} />
         <SensorCard title="Conductivity" value={waterData.conductivity} icon={Zap} status={waterData.conductivity !== 'NORMAL' ? (waterData.conductivity === 'CRITICAL' ? 'ABNORMAL' : 'INVESTIGATE') : 'NORMAL'} />
         <SensorCard title="Temperature" value={waterData.temperature} unit="°C" icon={Thermometer} />
+        <SensorCard title="Dissolved Oxygen (Developments)" value={demoState === 'DANGER' ? '2.1' : '6.5'} unit="mg/L" icon={FlaskConical} status={demoState === 'DANGER' ? 'INVESTIGATE' : 'NORMAL'} />
+        <SensorCard title="Heavy Metals Pb (Developments)" value="0.01" unit="mg/L" icon={FlaskConical} status="NORMAL" />
+        <SensorCard title="Heavy Metals As (Developments)" value="0.005" unit="mg/L" icon={FlaskConical} status="NORMAL" />
+        <SensorCard title="Nitrates (Developments)" value={demoState === 'WARNING' ? '45' : '10'} unit="mg/L" icon={FlaskConical} status={demoState === 'WARNING' ? 'INVESTIGATE' : 'NORMAL'} />
+        <SensorCard title="Total Suspended Solids (Developments)" value={demoState === 'DANGER' ? '250' : '20'} unit="mg/L" icon={Droplets} status={demoState === 'DANGER' ? 'ABNORMAL' : 'NORMAL'} />
+        <SensorCard title="Hydrocarbons (Developments)" value="ND" unit="ppm" icon={AlertTriangle} status="NORMAL" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">

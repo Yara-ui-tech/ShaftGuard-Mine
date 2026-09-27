@@ -8,7 +8,15 @@ export default function StructuralGuard() {
   const metrics = [
     { name: 'Roof Convergence', value: demoState === 'DANGER' ? '12.5' : demoState === 'WARNING' ? '5.2' : '0.8', unit: 'mm/day', status: demoState === 'DANGER' ? 'ABNORMAL' : demoState === 'WARNING' ? 'INVESTIGATE' : 'NORMAL' },
     { name: 'Bolt Tension Loss', value: demoState === 'DANGER' ? '15' : '2', unit: '%', status: demoState === 'DANGER' ? 'INVESTIGATE' : 'NORMAL' },
-    { name: 'Micro-Seismic Events', value: demoState === 'DANGER' ? '45' : '12', unit: 'events/hr', status: demoState === 'DANGER' ? 'ABNORMAL' : 'NORMAL' }
+    { name: 'Micro-Seismic Events', value: demoState === 'DANGER' ? '45' : '12', unit: 'events/hr', status: demoState === 'DANGER' ? 'ABNORMAL' : 'NORMAL' },
+    { name: 'Extensometer Strain (Developments)', value: demoState === 'DANGER' ? '4.2' : '1.1', unit: 'mm/m', status: demoState === 'DANGER' ? 'ABNORMAL' : 'NORMAL' },
+    { name: 'Pillar Stress (Developments)', value: demoState === 'WARNING' ? '28' : '15', unit: 'MPa', status: demoState === 'WARNING' ? 'INVESTIGATE' : 'NORMAL' },
+    { name: 'Groundwater Pressure (Developments)', value: demoState === 'DANGER' ? '450' : '120', unit: 'kPa', status: demoState === 'DANGER' ? 'ABNORMAL' : 'NORMAL' },
+    { name: 'Steel Support Deformation (Developments)', value: demoState === 'DANGER' ? '8.5' : '0.5', unit: 'mm', status: demoState === 'DANGER' ? 'INVESTIGATE' : 'NORMAL' },
+    { name: 'Shotcrete Stress (Developments)', value: '4.2', unit: 'MPa', status: 'NORMAL' },
+    { name: 'Cable Bolt Load (Developments)', value: demoState === 'WARNING' ? '185' : '110', unit: 'kN', status: demoState === 'WARNING' ? 'INVESTIGATE' : 'NORMAL' },
+    { name: 'Surface Subsidence (Developments)', value: '0.2', unit: 'mm/month', status: 'NORMAL' },
+    { name: 'Blast Vibration PPV (Developments)', value: demoState === 'WARNING' ? '45' : '12', unit: 'mm/s', status: demoState === 'WARNING' ? 'INVESTIGATE' : 'NORMAL' }
   ];
 
   return (

@@ -28,6 +28,10 @@ export default function AirGuard() {
         <SensorCard title="Carbon Monoxide (CO)" value={airData.carbonMonoxide} unit="ppm" icon={Gauge} status={airData.carbonMonoxide > 50 ? 'ABNORMAL' : airData.carbonMonoxide > 20 ? 'INVESTIGATE' : 'NORMAL'} />
         <SensorCard title="Methane (CH4)" value={airData.methane} unit="% LEL" icon={Flame} status={airData.methane > 2.0 ? 'ABNORMAL' : airData.methane > 1.0 ? 'INVESTIGATE' : 'NORMAL'} />
         <SensorCard title="Hydrogen Sulfide (H2S)" value={airData.hydrogenSulfide} unit="ppm" icon={AlertTriangle} status={airData.hydrogenSulfide > 10 ? 'ABNORMAL' : airData.hydrogenSulfide > 5 ? 'INVESTIGATE' : 'NORMAL'} />
+        <SensorCard title="Airflow Velocity (Developments)" value={demoState === 'DANGER' ? '0.2' : '2.5'} unit="m/s" icon={Wind} status={demoState === 'DANGER' ? 'ABNORMAL' : 'NORMAL'} />
+        <SensorCard title="Barometric Pressure (Developments)" value="101.3" unit="kPa" icon={Gauge} status="NORMAL" />
+        <SensorCard title="PM2.5 Dust (Developments)" value={demoState === 'WARNING' ? '150' : '25'} unit="µg/m³" icon={AlertTriangle} status={demoState === 'WARNING' ? 'INVESTIGATE' : 'NORMAL'} />
+        <SensorCard title="PM10 Dust (Developments)" value={demoState === 'WARNING' ? '250' : '45'} unit="µg/m³" icon={AlertTriangle} status={demoState === 'WARNING' ? 'INVESTIGATE' : 'NORMAL'} />
       </div>
 
       <div className="grid grid-cols-1 gap-6 mt-8">
