@@ -31,3 +31,11 @@
 .text-gradient {
   @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-300;
 }
+
+.label-sm {
+  @apply block text-xs font-black text-slate-400 uppercase tracking-widest mb-1.5;
+}
+
+.input-field {
+  @apply w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-primary transition-colors placeholder-slate-600;
+}

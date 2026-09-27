@@ -2,6 +2,12 @@ import { createContext, useContext, useState } from 'react';
 import type { ReactNode } from 'react';
 import type { DemoState, SensorData, WaterQualityData, Alert, AirQualityData, Worker, AiPrediction } from '../types';
 
+interface MineProfile {
+  operatorName: string;
+  mineName: string;
+  minerals: string[];
+}
+
 interface AppContextType {
   demoState: DemoState;
   setDemoState: (state: DemoState) => void;
@@ -18,6 +24,8 @@ interface AppContextType {
   mqttStatus: string;
   isConfigured: boolean;
   setConfigured: (mode: boolean) => void;
+  mineProfile: MineProfile;
+  setMineProfile: (profile: MineProfile) => void;
 }
 
 const defaultSensorData: Record<DemoState, SensorData> = {
@@ -199,6 +207,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [demoState, setDemoState] = useState<DemoState>('NORMAL');
   const [isPitchMode, setPitchMode] = useState<boolean>(false);
   const [isConfigured, setConfigured] = useState<boolean>(false);
+  const [mineProfile, setMineProfile] = useState<MineProfile>({ operatorName: '', mineName: 'ShaftGuard Mine', minerals: [] });
   
   // MQTT Integration
   const [isMqttLive, setMqttLive] = useState<boolean>(false);
@@ -262,7 +271,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     setMqttLive,
     mqttStatus,
     isConfigured,
-    setConfigured
+    setConfigured,
+    mineProfile,
+    setMineProfile
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
