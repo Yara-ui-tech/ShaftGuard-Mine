@@ -5,7 +5,7 @@ import { HardHat, MapPin, User, Activity, AlertCircle } from 'lucide-react';
 import StatusBadge from '../components/StatusBadge';
 
 export default function Personnel() {
-  const { workers } = useAppContext();
+  const { workers, demoState } = useAppContext();
 
   return (
     <div className="space-y-6">
