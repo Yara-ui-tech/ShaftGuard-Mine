@@ -21,6 +21,30 @@ export default function GlobalAlarm() {
   }, [demoState]);
 
   useEffect(() => {
+    let speechInterval: number | null = null;
+    
+    if (demoState === 'DANGER' && countdown === 0) {
+      const msg = new SpeechSynthesisUtterance("Critical conditions detected. Evacuate the mine immediately.");
+      msg.rate = 0.9;
+      msg.pitch = 0.8;
+      
+      const speak = () => {
+        // Cancel any ongoing speech to prevent queuing up too many
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(msg);
+      };
+      
+      speak(); // Speak immediately once it hits 0
+      speechInterval = window.setInterval(speak, 6000); // Repeat every 6 seconds
+    }
+    
+    return () => {
+      if (speechInterval) clearInterval(speechInterval);
+      window.speechSynthesis.cancel(); // Stop talking if state changes
+    };
+  }, [demoState, countdown]);
+
+  useEffect(() => {
     // Clear any existing intervals
     if (intervalRef.current !== null) clearInterval(intervalRef.current);
     if (warningIntervalRef.current !== null) clearInterval(warningIntervalRef.current);
@@ -181,6 +205,10 @@ export default function GlobalAlarm() {
                      <li className="flex items-center"><Users className="w-4 h-4 mr-2 text-primary" /> Evacuation orders to all smart-helmets</li>
                      <li className="flex items-center"><Wind className="w-4 h-4 mr-2 text-primary" /> Maximum ventilation fan activation</li>
                      <li className="flex items-center"><ShieldAlert className="w-4 h-4 mr-2 text-primary" /> Surface command center notified</li>
+                     <li className="flex items-center"><Cpu className="w-4 h-4 mr-2 text-primary" /> Isolate power to heavy machinery (prevent sparks)</li>
+                     <li className="flex items-center"><ShieldAlert className="w-4 h-4 mr-2 text-primary" /> Seal off high-risk ventilation zones</li>
+                     <li className="flex items-center"><Cpu className="w-4 h-4 mr-2 text-primary" /> Dispatch autonomous inspection drones</li>
+                     <li className="flex items-center"><Users className="w-4 h-4 mr-2 text-primary" /> Summon emergency rescue services</li>
                    </ul>
                 </div>
             </div>
