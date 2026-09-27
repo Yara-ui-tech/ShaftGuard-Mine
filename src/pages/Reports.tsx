@@ -3,7 +3,12 @@ import { FileText, Download, TrendingUp, ShieldAlert, Activity, Info } from 'luc
 import { useAppContext } from '../context/AppContext';
 
 export default function Reports() {
+  const { demoState, alerts, sensorData } = useAppContext();
   
+  // Dynamic metrics based on demoState for the MVP
+  const avgRisk = demoState === 'DANGER' ? 88 : demoState === 'WARNING' ? 62 : 12;
+  const highestRisk = demoState === 'DANGER' ? 98 : demoState === 'WARNING' ? 75 : 24;
+
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
@@ -22,7 +27,9 @@ export default function Reports() {
             <TrendingUp className="w-5 h-5 mr-2" />
             <h3 className="font-bold">Average Risk</h3>
           </div>
-          <div className="text-4xl font-black text-amber-500 mb-2">32<span className="text-xl text-slate-500">/100</span></div>
+          <div className={`text-4xl font-black mb-2 ${demoState === 'DANGER' ? 'text-red-500' : demoState === 'WARNING' ? 'text-amber-500' : 'text-emerald-500'}`}>
+            {avgRisk}<span className="text-xl text-slate-500">/100</span>
+          </div>
           <p className="text-xs text-slate-500">Last 24 hours</p>
         </div>
         
@@ -31,8 +38,10 @@ export default function Reports() {
             <ShieldAlert className="w-5 h-5 mr-2" />
             <h3 className="font-bold">Highest Risk</h3>
           </div>
-          <div className="text-4xl font-black text-red-500 mb-2">91<span className="text-xl text-slate-500">/100</span></div>
-          <p className="text-xs text-slate-500">Recorded at 14:32 today</p>
+          <div className={`text-4xl font-black mb-2 ${demoState === 'DANGER' ? 'text-red-500' : 'text-amber-500'}`}>
+            {highestRisk}<span className="text-xl text-slate-500">/100</span>
+          </div>
+          <p className="text-xs text-slate-500">Recorded today</p>
         </div>
         
         <div className="glass-panel p-6">
@@ -40,8 +49,8 @@ export default function Reports() {
             <Activity className="w-5 h-5 mr-2" />
             <h3 className="font-bold">Total Alerts</h3>
           </div>
-          <div className="text-4xl font-black text-white mb-2">8</div>
-          <p className="text-xs text-slate-500">Requires review</p>
+          <div className="text-4xl font-black text-white mb-2">{alerts.length}</div>
+          <p className="text-xs text-slate-500">Total recorded active</p>
         </div>
       </div>
 
