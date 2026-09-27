@@ -170,14 +170,33 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isLanding = location.pathname === '/';
 
+  const FaintBackground = () => (
+    <div 
+      className="fixed inset-0 pointer-events-none z-0 opacity-[0.03] mix-blend-plus-lighter"
+      style={{
+        backgroundImage: 'url(/icon.png)',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: '50%',
+        backgroundAttachment: 'fixed'
+      }}
+    />
+  );
+
   if (isLanding) {
-    return <div className="min-h-screen bg-background">{children}</div>;
+    return (
+      <div className="min-h-screen bg-background relative z-10">
+        <FaintBackground />
+        {children}
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background flex relative z-10">
+      <FaintBackground />
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
-      <div className="flex-1 flex flex-col lg:pl-64 transition-all">
+      <div className="flex-1 flex flex-col lg:pl-64 transition-all relative z-10">
         <Header setIsSidebarOpen={setIsSidebarOpen} />
         <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-x-hidden">
           {children}
