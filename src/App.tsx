@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Activity, Droplets, Wind, ShieldAlert, Cpu, Settings as SettingsIcon, Map, BarChart3, Info, LayoutDashboard, Menu, X, PlayCircle } from 'lucide-react';
+import { Activity, Droplets, Wind, ShieldAlert, Cpu, Settings as SettingsIcon, Map, BarChart3, Info, LayoutDashboard, Menu, X, PlayCircle, Wrench, GraduationCap } from 'lucide-react';
 import { useAppContext } from './context/AppContext';
 
 // Placeholder Pages
@@ -23,6 +23,9 @@ import TutorialOverlay from './components/TutorialOverlay';
 import SetupWizard from './components/SetupWizard';
 import GasGuard from './pages/GasGuard';
 import StructuralGuard from './pages/StructuralGuard';
+import Maintenance from './pages/Maintenance';
+import Emergency from './pages/Emergency';
+import Training from './pages/Training';
 
 const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: boolean) => void }) => {
   const location = useLocation();
@@ -36,9 +39,12 @@ const Sidebar = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (val: bool
     { name: 'Air Guard', path: '/air', icon: Wind },
     { name: 'Gas Detection', path: '/gas', icon: Wind },
     { name: 'Personnel', path: '/personnel', icon: Activity },
-    { name: 'AI Predictions', path: '/ai-predictions', icon: Activity },
-    { name: 'Environmental', path: '/modules', icon: Wind },
-    { name: 'Processing', path: '/modules', icon: Cpu },
+    { name: 'AI Predictions',    path: '/ai-predictions', icon: Cpu },
+    { name: 'Maintenance',        path: '/maintenance',     icon: Wrench },
+    { name: 'Emergency',          path: '/emergency',       icon: ShieldAlert },
+    { name: 'Training',           path: '/training',        icon: GraduationCap },
+    { name: 'Environmental',      path: '/modules',         icon: Wind },
+    { name: 'Processing',         path: '/modules',         icon: Cpu },
     { name: 'Alerts', path: '/alerts', icon: ShieldAlert },
     { name: 'Sensor Data', path: '/data', icon: BarChart3 },
     { name: 'Architecture', path: '/architecture', icon: Map },
@@ -263,6 +269,9 @@ function AppContent() {
           <Route path="/gas" element={<GasGuard />} />
           <Route path="/personnel" element={<Personnel />} />
           <Route path="/ai-predictions" element={<AiPredictions />} />
+          <Route path="/maintenance" element={<Maintenance />} />
+          <Route path="/emergency" element={<Emergency />} />
+          <Route path="/training" element={<Training />} />
           <Route path="/modules" element={<FutureModules />} />
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/data" element={<SensorData />} />
